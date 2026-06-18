@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>タスク登録画面</h1>
+	<!-- 入力フォーム -->
+	<form action="/add" method="post">
+		<div>
+		        <label>タスク名</label><br>
+		        <input type="text" name="title">
+		    </div>
+
+		    <div>
+		        <label>期限</label><br>
+		        <input type="date" name="deadline">
+		    </div>
+			
+			<div>
+				 <label>進捗</label><br>
+				<select name="progress">
+					 <option value="0%">0%</option>
+					 <option value="25%">25%</option>
+					 <option value="50%">50%</option>
+					 <option value="75%">75%</option>
+					 <option value="100%">100%</option>
+				</select>
+			</div>
+
+			<div>
+				<label>状態</label><br>
+				<select name="status">
+					<option value="未着手">未着手</option>
+					<option value="進行中">進行中</option>
+					<option value="完了">完了	</option>
+				</select>
+			</div>
+			
+			<div>
+				<button type="submit">登録</button>
+				<button type="button" onclick="location.href='/'">戻る</button>
+			</div>
+</body>
+</html>

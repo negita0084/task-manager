@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>タスク詳細画面</h1>
+	
+	<a th:href="@{/task/edit/{id}(id=${task.id})}">
+		 <button>編集</button>
+	</a>
+	
+		<h3>タスク詳細</h3>
+		<div>
+		    <p>
+		        タスク名：<span th:text="${task.title}"></span>
+		    </p>	
+		</div>
+		
+		<div>
+			 <p>
+			    期限：<span th:text="${task.deadline}"></span>
+			 </p>
+		</div>
+		
+		<div>
+			 <p>
+			    優先度：<span th:text="${task.priority}"></span>
+			 </p>
+		</div>
+		
+		<div>
+			<p th:if="${task.progress != '100%'}">
+				残り日数：<span th:text="${task.RemainingDaysText}"></span>
+			</p>
+		</div>
+			
+		<div>
+			<p>
+				 進捗：<span th:text="${task.progress}"></span>
+			</p>
+		</div>
+
+		<div>
+			<p>
+				状態：<span th:text="${task.status}"></span>
+			</p>
+		</div>
+		
+		<h3>タスク内容</h3>
+			<textarea name="description" rows="10" cols="60" th:text="${task.description}"readonly></textarea>
+		
+		<div>
+			<h3>サブタスク</h3>
+			<div th:each="sub : ${task.subTasks}">
+			    <span th:text="${sub.done} ? '✔' : '□'"></span>
+			    <span th:text="${sub.title}"></span>
+			</div>
+		</div>
+			
+		<h3>メモ</h3>
+			<textarea name="memo" rows="10" cols="60" th:text="${task.memo}"readonly></textarea>		
+
+		<div>
+			<button type="button" onclick="location.href='/'">戻る</button>
+		</div>
+</form>
+</body>
+</html>

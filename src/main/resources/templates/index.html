@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+</head>
+<body>
+
+<h1>タスク管理アプリ</h1>
+
+<div class="toolbar">
+	<a href="/task/new">
+	    <button>＋ タスク追加</button>
+	</a>
+	
+	<div class="filter-bar">絞り込む:
+	    <select onchange="location=this.value">
+	        <option th:value="@{/task}"
+	                th:selected="${filter == null}">
+	            全て
+	        </option>
+	        <option th:value="@{/task(filter='done')}"
+	                th:selected="${filter == 'done'}">
+	            完了
+	        </option>
+	        <option th:value="@{/task(filter='3days')}"
+	                th:selected="${filter == '3days'}">
+	            3日以内
+	        </option>
+	        <option th:value="@{/task(filter='1day')}"
+	                th:selected="${filter == '1day'}">
+	            期限前日
+	        </option>
+	        <option th:value="@{/task(filter='today')}"
+	                th:selected="${filter == 'today'}">
+	            今日まで
+	        </option>
+	        <option th:value="@{/task(filter='overdue')}"
+	                th:selected="${filter == 'overdue'}">
+	            期限切れ
+	        </option>
+	    </select>
+	</div>
+</div>
+
+<style>
+	.toolbar {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+
+	.filter-bar {
+	    display: flex;
+	    align-items: center;
+	    gap: 8px;
+	}
+
+	.filter-bar select {
+	    padding: 5px 10px;
+	}
+</style>
+
+	<div th:each="task : ${tasks}" style="border:1px solid #ccc; padding:10px; margin:10px;">
+	    <h3 th:text="${task.title}">タスク名</h3>
+
+	    <p>
+	        期限：<span th:text="${task.deadline}"></span>
+	    </p>
+		
+		<p>
+		   	優先度：<span th:text="${task.priority}"></span>
+		</p>
+		
+		<p th:if="${task.status != '完了'}">
+		    残り日数：<span th:text="${task.RemainingDaysText}"></span>
+		</p>
+		
+		<p>
+		    状態：<span th:text="${task.status}"></span>
+	　 </p>
+	  
+	   <p>
+	  		進捗：<span th:text="${task.progress}"></span>
+	   </p>	 
+			
+		<div style="display:flex; gap:10px; align-items:center;">
+			<a th:href="@{/task/detai/{id}(id=${task.id})}">
+		    	<button>詳細</button>
+			</a>	
+			<form th:action="@{/task/delete/{id}(id=${task.id})}" method="post"
+		      	onsubmit="return confirm('本当に削除しますか？');">
+		    	<button type="submit">削除</button>
+			</form>
+		</div>
+	</div>
+</html>
